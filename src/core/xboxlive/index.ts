@@ -213,7 +213,7 @@ export const EXPERIMENTAL_createDummyWin32DeviceToken =
 			url: config.urls.deviceAuthenticate,
 			method: 'POST',
 			headers: post_headers,
-			data: post_data
+			data: post_data,
 			proxy: {
 				host: 'localhost',
 				port: 8888
