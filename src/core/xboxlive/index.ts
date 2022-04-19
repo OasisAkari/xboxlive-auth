@@ -214,6 +214,10 @@ export const EXPERIMENTAL_createDummyWin32DeviceToken =
 			method: 'POST',
 			headers: post_headers,
 			data: post_data
+			proxy: {
+				host: 'localhost',
+				port: 8888
+			  }
 		})
 			.then(res => res.data)
 			.catch(_ => {
