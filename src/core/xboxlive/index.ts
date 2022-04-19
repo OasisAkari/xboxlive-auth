@@ -187,26 +187,33 @@ export const EXPERIMENTAL_createDummyWin32DeviceToken =
 			x: 'b8Zc6GPFeu41DqiWPJxRa_jqUTSiMA537emKVHt8UO8',
 			y: 'CXAuTEHet72GjgSDfDg6psBrwE1waxBsNEIGrRZV_90'
 		};
+		
+		const post_data = {
+			RelyingParty: 'http://auth.xboxlive.com',
+			TokenType: 'JWT',
+			Properties: {
+				AuthMethod: 'ProofOfPossession',
+				TrustedParty: trustedParty,
+				Id: `{${serviceDeviceId}}`,
+				DeviceType: 'Win32',
+				Version: '10.0.18363',
+				ProofKey: serviceProofKey
+			}
+		};
+
+		const post_headers = getBaseHeaders({
+			...XBLAdditionalHeaders,
+			Signature: serviceSignature
+		})
+
+		console.log(post_data)
+		console.log(post_headers)
 
 		const response = await axios({
 			url: config.urls.deviceAuthenticate,
 			method: 'POST',
-			headers: getBaseHeaders({
-				...XBLAdditionalHeaders,
-				Signature: serviceSignature
-			}),
-			data: {
-				RelyingParty: 'http://auth.xboxlive.com',
-				TokenType: 'JWT',
-				Properties: {
-					AuthMethod: 'ProofOfPossession',
-					TrustedParty: trustedParty,
-					Id: `{${serviceDeviceId}}`,
-					DeviceType: 'Win32',
-					Version: '10.0.18363',
-					ProofKey: serviceProofKey
-				}
-			}
+			headers: post_headers,
+			data: post_data
 		})
 			.then(res => res.data)
 			.catch(_ => {
